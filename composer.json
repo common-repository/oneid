@@ -1,0 +1,100 @@
+{
+    "name": "boxuk/oneid-wordpress-plugin",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0-or-later",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://wpackagist.org"
+        },
+        {
+            "url": "https://github.com/boxuk/wordhat.git",
+            "type": "git"
+        }
+    ],
+    "require": {
+        "php": "^7.0 || ^8",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "wp-phpunit/wp-phpunit": "^5.8",
+        "symfony/dotenv": "^3.4 || ^4.0 || ^5.0 || ^6.0",
+        "phpunit/phpunit": "^6 || ^7 || ^8 || ^9",
+        "roots/wordpress": "*",
+        "genesis/behat-fail-aid": "^3.7",
+        "behat/mink-goutte-driver": "^1.3",
+        "dmore/behat-chrome-extension": "^1.3",
+        "behat/mink-selenium2-driver": "^1.5",
+        "wp-cli/core-command": "^2.1",
+        "wp-cli/db-command": "^2.0",
+        "wp-cli/extension-command": "^2.1",
+        "wp-cli/cache-command": "^2.0",
+        "wpackagist-plugin/woocommerce": "*",
+        "yoast/phpunit-polyfills": "^1.0",
+        "wp-cli/entity-command": "^2.1",
+        "wp-cli/wp-cli": "^2.5",
+        "boxuk/wordhat" : "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "DigitalIdentityNet\\OneId\\WordPress\\Plugin\\": "src"
+        },
+        "classmap": [
+            "vendor_prefixed/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DigitalIdentityNet\\OneId\\WordPress\\Plugin\\Tests\\": "tests",
+            "DigitalIdentityNet\\OneId\\WordPress\\Plugin\\Tests\\Unit\\": "tests/Unit",
+            "DigitalIdentityNet\\OneId\\WordPress\\Plugin\\Tests\\Integration\\": "tests/Integration"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0.x-dev"
+        },
+        "installer-disable": true,
+        "wordpress-install-dir": "tests/wp"
+    },
+    "scripts": {
+        "test:unit": [
+            "export WP_MULTISITE=0 && vendor/bin/phpunit --testsuite=unit --verbose --colors=always --exclude-group=ms-required",
+            "export WP_MULTISITE=1 && vendor/bin/phpunit --testsuite=unit --verbose --colors=always --exclude-group=ms-excluded"
+        ],
+        "test:integration": [
+            "export WP_MULTISITE=0 && vendor/bin/phpunit --testsuite=integration --verbose --colors=always --exclude-group=ms-required",
+            "export WP_MULTISITE=1 && vendor/bin/phpunit --testsuite=integration --verbose --colors=always --exclude-group=ms-excluded"
+        ],
+        "test:functional": [
+            "bin/behat.sh"
+        ],
+        "test:all": [
+            "@composer test:unit",
+            "@composer test:integration",
+            "@composer test:functional"
+        ],
+        "install-tools": [
+            "@composer install --working-dir=tools/php_codesniffer",
+            "@composer install --working-dir=tools/php-scoper"
+        ],
+        "phpcs": [
+            "./tools/php_codesniffer/vendor/bin/phpcs . --severity=1"
+        ],
+        "prefix-deps": [
+            "@composer prefix-openid-connect-php",
+            "@composer dump-autoload"
+        ],
+        "prefix-openid-connect-php": [
+            "@php ./tools/php-scoper/vendor/bin/php-scoper add-prefix --prefix=OneId_Vendor --output-dir=./vendor_prefixed --force --quiet"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "roots/wordpress-core-installer": true
+        }
+    }
+}

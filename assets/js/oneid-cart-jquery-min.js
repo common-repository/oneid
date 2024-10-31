@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",(function(){const e={remove_duplicate_notices:function(){const e=document.querySelectorAll(".oneid-notice-message"),n=e.length;if(!(n<2))for(let t=0;t<n;++t)0!==t&&e[t].parentNode.removeChild(e[t])},init:function(){jQuery&&jQuery(document.body).on("updated_wc_div",e.remove_duplicate_notices)}};e.init()}));

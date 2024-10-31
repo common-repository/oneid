@@ -1,0 +1,51 @@
+/* Hide the slug field from the age_restriction taxonomy. */
+.taxonomy-oneid_age_restriction .term-slug-wrap {
+	display: none;
+}
+
+/* Hide the slug from the quick edit form for the age_restriction taxonomy */
+.taxonomy-oneid_age_restriction .wp-list-table .inline-edit-row .inline-edit-col label:last-child {
+	display: none;
+}
+
+/* Utility class to hide elements */
+.oneid-age-restriction-hidden {
+	display: none;
+}
+
+/* Ensures age_restriction column in product table doesn't overflow on certain screen sizes */
+table.wp-list-table .column-taxonomy-oneid_age_restriction {
+	width: 11%;
+}
+
+/* Vendor message formatting */
+.oneid_vendor_message {
+	padding-top: 10px;
+	max-width: 25em;
+}
+
+.oneid_vendor_message a{
+	font-weight: 600;
+}
+
+.oneid-settings-header {
+	display: flex;
+	align-items: flex-start;
+	max-width: 120px;
+}
+
+.oneid-settings-header h1 {
+	flex: 1;
+	padding-top: 11px;
+}
+
+.oneid-settings-header img {
+	width: 50px;
+	height: auto;
+}
+
+@media screen and (max-width: 782px){
+	.oneid_vendor_message {
+		max-width: 100%;
+	}
+}
